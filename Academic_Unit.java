@@ -110,6 +110,10 @@ class Lab extends Academic_Unit{
     }
 
     public void setEquipmentCount(int equipmentCount) {
+        if(equipmentCount < 0){
+            System.out.println("Invalid Equipment Count Entered.");
+            equipmentCount = 0;
+        }
         this.equipmentCount = equipmentCount;
     }
 
@@ -134,6 +138,11 @@ class Lab extends Academic_Unit{
         return equipmentCostPerUnit;
     }
 
-    
+    public double CalculateOperationalCost(){
+        return (studentCapacity*300) + (equipmentCount * equipmentCostPerUnit);
+    }
 
+    public String toString(){
+        return super.toString() + "Lab Type: "+labType+"Equipment Count:"+equipmentCount+"Equipment Cost per Unit: "+equipmentCostPerUnit;
+    }
 }
