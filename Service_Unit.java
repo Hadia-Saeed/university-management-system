@@ -64,10 +64,6 @@ class TransportService extends Service_Unit{
     public void setBusCount(int busCount) {
         this.busCount = busCount;
     }
-
-    
-
-    
     
     
     
