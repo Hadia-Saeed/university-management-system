@@ -34,9 +34,8 @@ public abstract class Campus_Entity{
 
     public abstract double CalculateOperationalCost();
 
-    public void DisplayInfo(){
-        System.out.println("EntityID:"+entityID);
-        System.out.println("Name:"+name);
-        System.out.println("Location:"+location);
+    public String toString(){
+        return "EntityID:"+entityID+"Name:"+name+"Location:"+location;
+        
     }
 }
