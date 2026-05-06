@@ -45,6 +45,30 @@ public abstract class Service_Unit extends Campus_Entity{
 }//end of Service_Unit class
 class TransportService extends Service_Unit{
     protected int routeCount, driverCount, busCount;
+
+    public TransportService(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int routeCount, int driverCount, int busCount) {
+        super(entityID, location, name, serviceHours, staffCount, isActive);
+        this.routeCount = routeCount;
+        this.driverCount = driverCount;
+        this.busCount = busCount;
+    }
+
+    public void setRouteCount(int routeCount) {
+        this.routeCount = routeCount;
+    }
+
+    public void setDriverCount(int driverCount) {
+        this.driverCount = driverCount;
+    }
+
+    public void setBusCount(int busCount) {
+        this.busCount = busCount;
+    }
+
+    
+
+    
+    
     
     
 }
