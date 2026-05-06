@@ -39,32 +39,163 @@ public abstract class Service_Unit extends Campus_Entity{
 
     @Override
     public String toString() {
-        return super.toString() + ("ServiceHours:" + serviceHours + "StaffCount:" + staffCount + "IsActive:" + isActive);
+        return super.toString() + ("\nServiceHours:" + serviceHours + "\nStaffCount:" + staffCount + "\nIsActive:" + isActive);
     }
 
 }//end of Service_Unit class
-class TransportService extends Service_Unit{
+
+class TransportService extends Service_Unit implements Schedulable{
     protected int routeCount, driverCount, busCount;
 
     public TransportService(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int routeCount, int driverCount, int busCount) {
         super(entityID, location, name, serviceHours, staffCount, isActive);
-        this.routeCount = routeCount;
-        this.driverCount = driverCount;
-        this.busCount = busCount;
+        setRouteCount(routeCount);
+        setDriverCount(driverCount);
+        setBusCount(busCount);
     }
 
     public void setRouteCount(int routeCount) {
+        if(routeCount < 0){
+            System.err.println("Route count cannot be negative.");
+        }
         this.routeCount = routeCount;
     }
 
     public void setDriverCount(int driverCount) {
+        if(driverCount < 0){
+            System.err.println("Driver count cannot be negative.");
+        }
         this.driverCount = driverCount;
     }
 
     public void setBusCount(int busCount) {
+        if(busCount < 0){
+            System.err.println("Bus count cannot be negative.");
+        }
         this.busCount = busCount;
     }
+
+    public int getRouteCount() {
+        return routeCount;
+    }
+
+    public int getDriverCount() {
+        return driverCount;
+    }
+
+    public int getBusCount() {
+        return busCount;
+    }
     
+    @Override
+    public double CalculateOperationalCost() {
+        return (serviceHours * staffCount * 15) + (routeCount * 100) + (driverCount * 50) + (busCount * 200);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ("\nRouteCount:" + routeCount + "\nDriverCount:" + driverCount + "\nBusCount:" + busCount);
+    }
+
+    @Override
+    public void generateSchedule() {
+        System.out.println("Generating transport service schedule...");
+    }
     
-    
-}
+}//end of TransportService class
+
+class SecurityService extends Service_Unit implements Notifiable{
+    protected int guardCount, shiftDuration;
+
+    public SecurityService(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int guardCount, int shiftDuration) {
+        super(entityID, location, name, serviceHours, staffCount, isActive);
+        setGuardCount(guardCount);
+        setShiftDuration(shiftDuration);
+    }
+
+    public void setGuardCount(int guardCount) {
+        if(guardCount < 0){
+            System.err.println("Guard count cannot be negative.");
+        }
+        this.guardCount = guardCount;
+    }
+
+    public void setShiftDuration(int shiftDuration) {
+        if(shiftDuration < 0){
+            System.err.println("Shift duration cannot be negative.");
+        }
+        this.shiftDuration = shiftDuration;
+    }
+
+    public int getGuardCount() {
+        return guardCount;
+    }
+
+    public int getShiftDuration() {
+        return shiftDuration;
+    }
+
+    @Override
+    public double CalculateOperationalCost() {
+        return (serviceHours * staffCount * 20) + (guardCount * 30) + (shiftDuration * 10);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ("\nGuardCount:" + guardCount + "\nShiftDuration:" + shiftDuration);
+    }
+
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("Sending security notification: " + message);
+    }
+
+}//end of SecurityService class
+
+class HealthCenter extends Service_Unit implements Notifiable{
+    protected int docCount, bedCount;
+
+    public HealthCenter(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int docCount, int bedCount) {
+        super(entityID, location, name, serviceHours, staffCount, isActive);
+        setDocCount(docCount);
+        setBedCount(bedCount);
+    }
+
+    public void setDocCount(int docCount) {
+        if(docCount < 0){
+            System.err.println("Doctor count cannot be negative.");
+        }
+        this.docCount = docCount;
+    }
+
+    public void setBedCount(int bedCount) {
+        if(bedCount < 0){
+            System.err.println("Bed count cannot be negative.");
+        }
+        this.bedCount = bedCount;
+    }
+
+    public int getDocCount() {
+        return docCount;
+    }
+
+    public int getBedCount() {
+        return bedCount;
+    }
+
+    @Override
+    public double CalculateOperationalCost() {
+        return (serviceHours * staffCount * 25) + (docCount * 100) + (bedCount * 50);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ("\nDocCount:" + docCount + "\nBedCount:" + bedCount);
+    }
+
+    @Override
+    public void sendNotification(String message) {
+        System.out.println("Sending health center notification: " + message);
+    }
+
+}//end of HealthCenter class
