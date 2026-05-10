@@ -50,14 +50,76 @@ public abstract class Academic_Unit extends Campus_Entity {
     }
     
 }
-class Department extends Academic_Unit{
+class Department extends Academic_Unit implements Reportable{
     private String hodName;
-    Arraylist <Course> courses = new ArrayList<>();
+    private ArrayList <Course> coursesList = new ArrayList<>();
 
+    public Department(String hodName, String semester, int staffCount, int studentCapacity, String entityID, String location, String name) {
+        super(semester, staffCount, studentCapacity, entityID, location, name);
+        this.hodName = hodName;
+    }
 
+    public void addCourse(Course c){
+        if (c != null) {
+        coursesList.add(c);
+        System.out.println("Successfully added the course.");
+        }
+        else{
+            System.out.println("Course cannot be null.");
+        }
+    }
 
+    public void removeCourse(String courseID){
+        boolean found = false;
+        for (int i = 0; i < coursesList.size(); i++){
+            if(coursesList.get(i) != null && coursesList.get(i).getCourseID().equals(courseID)){
+                coursesList.remove(i);
+                System.out.println("Successfully removed the Course.");
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+            System.out.println("Course NOT Found.");
+        }
+    }
 
+    public void setHodName(String hodName) {
+        this.hodName = hodName;
+    }
 
+    public void setCourses(ArrayList<Course> courses) {
+        this.coursesList = courses;
+    }
+
+    public String getHodName() {
+        return hodName;
+    }
+
+    public ArrayList<Course> getCourses() {
+        return coursesList;
+    }
+
+    public double CalculateOperationalCost(){
+        return (studentCapacity * 500) + (staffCount * 2000);
+    }
+
+    @Override
+    public String toString() {
+       return super.toString()+"Department [hodName=" + hodName + ", courses=" + coursesList;
+    }
+
+    public int calculateTotalStudents(){
+        int total = 0;
+        for(int i = 0; i < coursesList.size();i++){
+            total  += coursesList.get(i).getStudentList().size();
+        }
+        return total;
+    }
+
+    public void generateReport(){
+        System.out.println("=== Department Performance Report ===" + "\nDepartment: " + getName() + "\nHOD: " + hodName +"\nLocation: " + getLocation() +"\nTotal Courses: " + coursesList.size() +"\nTotal Students Enrolled: " + calculateTotalStudents() +"\nOperational Cost: " + CalculateOperationalCost());
+    }
 }
 class Classroom extends Academic_Unit{
     private boolean hasProjector;
@@ -89,6 +151,7 @@ class Classroom extends Academic_Unit{
         return (studentCapacity*200) + (hasProjector? 500 : 0);
     }
 
+    @Override
     public String toString(){
         return super.toString() + "Has Projector? " + hasProjector + "Room Type: "+roomType;
     }
@@ -142,6 +205,7 @@ class Lab extends Academic_Unit{
         return (studentCapacity*300) + (equipmentCount * equipmentCostPerUnit);
     }
 
+    @Override
     public String toString(){
         return super.toString() + "Lab Type: "+labType+"Equipment Count:"+equipmentCount+"Equipment Cost per Unit: "+equipmentCostPerUnit;
     }
