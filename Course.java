@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Course implements Schedulable{
+    private static int totalCourses = 0;
     private String courseID, courseName , creditHours;
     private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayList<Assignment> assignmentList = new ArrayList<>();
@@ -14,6 +15,7 @@ public class Course implements Schedulable{
         this.creditHours = creditHours;
         this.day = day;
         this.time = time;
+        totalCourses++;
     }
 
     //add methods for student and assignment lists
@@ -100,6 +102,10 @@ public class Course implements Schedulable{
 
     public String getClassroom() {
         return classroom;
+    }
+    
+    public static int getTotalCourses() {
+        return totalCourses;
     }
 
     @Override

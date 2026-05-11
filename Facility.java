@@ -1,12 +1,14 @@
 public abstract class Facility extends Campus_Entity{
     protected double maintenanceCost;
     protected int operatingHours, capacity;
+    private static int totalFacilityUsage = 0;
 
     public Facility(String entityID, String location, String name, double maintenanceCost, int operatingHours, int capacity) {
         super(entityID, location, name);
         setMaintenanceCost(maintenanceCost);
         setOperatingHours(operatingHours);
         setCapacity(capacity);
+        totalFacilityUsage++;
     }
 
     public void setMaintenanceCost(double maintenanceCost) {
@@ -40,6 +42,10 @@ public abstract class Facility extends Campus_Entity{
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public static int getTotalFacilityUsage() {
+        return totalFacilityUsage;
     }
 
     public abstract double CalculateOperationalCost();
