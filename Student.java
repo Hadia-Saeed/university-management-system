@@ -53,16 +53,25 @@ public class Student {
         return cgpa;
     }
 
+    public int getTotalStudents() {
+        return totalStudents;
+    }
+
     public ArrayList<String> getEnrolledCourseIDs() {
         return enrolledCourseIDs;
     }
 
-    public int getTotalStudents() {
-        return totalStudents;
-    }   
+    public void addCourseID(String id){
+        enrolledCourseIDs.add(id);
+    }
 
-    public void addCourse(String id){
-        
+    public void removeCourseID(String id){
+        if (enrolledCourseIDs.contains(id)) {
+            enrolledCourseIDs.remove(id);
+            System.out.println("Course ID " + id + " removed from enrolled courses.");
+        } else {
+            System.out.println("Course ID " + id + " not found in enrolled courses.");
+        }
     }
 
     @Override
