@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public abstract class Academic_Unit extends Campus_Entity {
@@ -53,6 +54,7 @@ public abstract class Academic_Unit extends Campus_Entity {
 class Department extends Academic_Unit implements Reportable{
     private String hodName;
     private ArrayList <Course> coursesList = new ArrayList<>();
+    private ArrayList<Teacher> teachersList = new ArrayList<>();
 
     public Department(String hodName, String semester, int staffCount, int studentCapacity, String entityID, String location, String name) {
         super(semester, staffCount, studentCapacity, entityID, location, name);
@@ -84,12 +86,40 @@ class Department extends Academic_Unit implements Reportable{
         }
     }
 
+    public void addTeacher(Teacher t) {
+        if (t != null) {
+            teachersList.add(t);
+            System.out.println("Successfully added the teacher.");
+        } else {
+            System.out.println("Teacher cannot be null.");
+        }
+    }
+
+    public void removeTeacher(String teacherID) {
+        boolean found = false;
+        for (int i = 0; i < teachersList.size(); i++) {
+            if (teachersList.get(i) != null && teachersList.get(i).getTeacherId().equals(teacherID)) {
+                teachersList.remove(i);
+                System.out.println("Successfully removed the teacher.");
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Teacher NOT Found.");
+        }
+    }
+
     public void setHodName(String hodName) {
         this.hodName = hodName;
     }
 
     public void setCourses(ArrayList<Course> courses) {
         this.coursesList = courses;
+    }
+
+    public void setTeachers(ArrayList<Teacher> teachers) {
+        this.teachersList = teachers;
     }
 
     public String getHodName() {
@@ -100,13 +130,8 @@ class Department extends Academic_Unit implements Reportable{
         return coursesList;
     }
 
-    public double CalculateOperationalCost(){
-        return (studentCapacity * 500) + (staffCount * 2000);
-    }
-
-    @Override
-    public String toString() {
-       return super.toString()+"Department [hodName=" + hodName + ", courses=" + coursesList;
+    public ArrayList<Teacher> getTeachers() {
+        return teachersList;
     }
 
     public int calculateTotalStudents(){
@@ -120,6 +145,17 @@ class Department extends Academic_Unit implements Reportable{
     public void generateReport(){
         System.out.println("=== Department Performance Report ===" + "\nDepartment: " + getName() + "\nHOD: " + hodName +"\nLocation: " + getLocation() +"\nTotal Courses: " + coursesList.size() +"\nTotal Students Enrolled: " + calculateTotalStudents() +"\nOperational Cost: " + CalculateOperationalCost());
     }
+
+    @Override
+    public double CalculateOperationalCost(){
+        return (studentCapacity * 500) + (staffCount * 2000);
+    }
+
+    @Override
+    public String toString() {
+       return super.toString()+"Department [HOD Name=" + hodName + ", Courses =" + coursesList;
+    }
+    
 }
 class Classroom extends Academic_Unit{
     private boolean hasProjector;
