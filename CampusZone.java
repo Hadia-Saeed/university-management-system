@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class CampusZone {
+public class CampusZone implements Serializable{
     private String zoneName;
     ArrayList<Facility> facilityList = new ArrayList<>();
     ArrayList<Service_Unit> serviceList = new ArrayList<>();

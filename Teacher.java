@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Teacher {
+public class Teacher implements Serializable{
     private String teacherId, name, department;
     private ArrayList<String> assignedCourseIDs;
 

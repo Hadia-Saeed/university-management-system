@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 public abstract class Facility extends Campus_Entity{
     protected double maintenanceCost;
     protected int operatingHours, capacity;
@@ -57,11 +59,11 @@ public abstract class Facility extends Campus_Entity{
 
 }//end of Facility class
 
-class Library extends Facility{
+class Library extends Facility implements Serializable{
 
 }
 
-class Cafeteria extends Facility{
+class Cafeteria extends Facility implements Serializable{
     protected int seatCount, menuCount;
 
     public Cafeteria(String entityID, String location, String name, double maintenanceCost, int operatingHours, int capacity, int seatCount, int menuCount) {
@@ -104,7 +106,7 @@ class Cafeteria extends Facility{
 
 }//end of Cafeteria class
 
-class Hostel extends Facility{
+class Hostel extends Facility implements Serializable{
     protected String wardenName;
     protected int roomCount, occupiedRooms;
 

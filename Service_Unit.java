@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 public abstract class Service_Unit extends Campus_Entity{
     protected int serviceHours,staffCount;
     protected boolean isActive;
@@ -44,7 +46,7 @@ public abstract class Service_Unit extends Campus_Entity{
 
 }//end of Service_Unit class
 
-class TransportService extends Service_Unit implements Schedulable{
+class TransportService extends Service_Unit implements Schedulable, Serializable{
     protected int routeCount, driverCount, busCount;
 
     public TransportService(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int routeCount, int driverCount, int busCount) {
@@ -104,7 +106,7 @@ class TransportService extends Service_Unit implements Schedulable{
     
 }//end of TransportService class
 
-class SecurityService extends Service_Unit implements Notifiable{
+class SecurityService extends Service_Unit implements Notifiable, Serializable{
     protected int guardCount, shiftDuration;
 
     public SecurityService(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int guardCount, int shiftDuration) {
@@ -152,7 +154,7 @@ class SecurityService extends Service_Unit implements Notifiable{
 
 }//end of SecurityService class
 
-class HealthCenter extends Service_Unit implements Notifiable{
+class HealthCenter extends Service_Unit implements Notifiable, Serializable{
     protected int docCount, bedCount;
 
     public HealthCenter(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int docCount, int bedCount) {
