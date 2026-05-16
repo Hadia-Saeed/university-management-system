@@ -1,5 +1,7 @@
 import java.util.ArrayList;
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable{
     private static int totalStudents = 0; // Static variable to keep track of total students
     private String studentID, name;
     private int age;

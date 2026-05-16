@@ -1,4 +1,6 @@
-public class Assignment {
+import java.io.Serializable;
+
+public class Assignment implements Serializable{
     private String assignmentID, title;
     private int totalMarks;
 
