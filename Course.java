@@ -1,15 +1,16 @@
+import java.io.*;
 import java.util.ArrayList;
 
-public class Course implements Schedulable{
+public class Course implements Schedulable,Serializable{
     private static int totalCourses = 0;
     private String courseID, courseName , creditHours;
     private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayList<Assignment> assignmentList = new ArrayList<>();
 
-    private String day,time,classroom; //Data members for timetable
+    private String day,time,classroomID; //Data members for timetable
 
     public Course(String classroom, String courseName, String courseID, String creditHours, String day, String time) {
-        this.classroom = classroom;
+        this.classroomID = classroom;
         this.courseName = courseName;
         this.courseID = courseID;
         this.creditHours = creditHours;
@@ -49,7 +50,7 @@ public class Course implements Schedulable{
     }
 
     public void setClassroom(String classroom) {
-        this.classroom = classroom;
+        this.classroomID = classroom;
     }
 
     public void setCourseID(String courseID) {
@@ -101,7 +102,7 @@ public class Course implements Schedulable{
     }
 
     public String getClassroom() {
-        return classroom;
+        return classroomID;
     }
     
     public static int getTotalCourses() {
@@ -114,7 +115,7 @@ public class Course implements Schedulable{
     }
 
     public void generateSchedule(){
-        System.out.println("=== Class Schedule ===" +"\nCourse: " + courseName +"\nCourse ID: " + courseID +"\nDay(s): " + day +"\nTime: " + time +"\nClassroom: " + classroom +"\nCredit Hours: " + creditHours);
+        System.out.println("=== Class Schedule ===" +"\nCourse: " + courseName +"\nCourse ID: " + courseID +"\nDay(s): " + day +"\nTime: " + time +"\nAssigned Classroom: " + classroomID +"\nCredit Hours: " + creditHours);
         
     }
 

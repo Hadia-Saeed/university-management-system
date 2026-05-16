@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 
 public abstract class Academic_Unit extends Campus_Entity {
@@ -50,7 +51,7 @@ public abstract class Academic_Unit extends Campus_Entity {
     }
     
 }
-class Department extends Academic_Unit implements Reportable{
+class Department extends Academic_Unit implements Reportable,Serializable{
     private String hodName;
     private ArrayList <Course> coursesList = new ArrayList<>();
     private ArrayList<Teacher> teachersList = new ArrayList<>();
@@ -109,6 +110,25 @@ class Department extends Academic_Unit implements Reportable{
         }
     }
 
+    //Resheduling Affected Classes (looping thru courses list and checkin if any course has the affected classroom, and setting it TBD)
+    public void handleClassroomUnavailable(String classroomID){
+        boolean anyAffected = false;
+        for (int i = 0; i < coursesList.size(); i++) {
+            Course c = coursesList.get(i);
+            if (c.getClassroom().equals(classroomID)){
+                c.setClassroom("Unassigned");
+                c.setDay("Unassigned");
+                c.setTime("Unassigned");
+                System.out.println("Course " + c.getCourseID() + " - " + c.getCourseName() + " has been rescheduled. Awaiting new room assignment.");
+                anyAffected = true;
+
+            }
+        }
+        if(!anyAffected){
+            System.out.println("No courses affected by classroom " + classroomID + " unavailability");
+        }
+    }
+
     public void setHodName(String hodName) {
         this.hodName = hodName;
     }
@@ -156,39 +176,58 @@ class Department extends Academic_Unit implements Reportable{
     }
     
 }
-class Classroom extends Academic_Unit{
+class Classroom extends Academic_Unit implements Serializable{
     private boolean hasProjector;
-    private String roomType;
+    private String roomNum;
+    private boolean isAvailable;
 
-    public Classroom(boolean hasProjector, String roomType, String semester, int staffCount, int studentCapacity, String entityID, String location, String name) {
+    public Classroom(boolean available, boolean hasProjector, String roomNum, String semester, int staffCount, int studentCapacity, String entityID, String location, String name) {
         super(semester, staffCount, studentCapacity, entityID, location, name);
         this.hasProjector = hasProjector;
-        this.roomType = roomType;
+        this.roomNum = roomNum;
+        isAvailable = available;
     }
 
     public void setHasProjector(boolean hasProjector) {
         this.hasProjector = hasProjector;
     }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
+    public void setRoomNum(String roomNum) {
+        this.roomNum = roomNum;
     }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+        if (!isAvailable) {
+        notifyReschedule();
+    }
+    }
+
+    //Just notifies that a class is unavailable
+    private void notifyReschedule() {
+        System.out.println("Classroom " + roomNum + " is unavailable. Rescheduling affected courses...");
+    }
+    
 
     public boolean getHasProjector() {
         return hasProjector;
     }
 
-    public String getRoomType() {
-        return roomType;
+    public String getRoomNum() {
+        return roomNum;
     }
 
     public double CalculateOperationalCost(){
         return (studentCapacity*200) + (hasProjector? 500 : 0);
     }
 
+    public boolean getIsAvailable() {
+        return isAvailable;
+    }
+
     @Override
     public String toString(){
-        return super.toString() + "Has Projector? " + hasProjector + "Room Type: "+roomType;
+        return super.toString() + "Has Projector? " + hasProjector + "Room Num: "+roomNum + "Is available? " + isAvailable;
     }
 }
 class Lab extends Academic_Unit{
