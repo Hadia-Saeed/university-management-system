@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class Facility extends Campus_Entity implements Serializable{
     protected double maintenanceCost;
@@ -59,9 +60,52 @@ public abstract class Facility extends Campus_Entity implements Serializable{
 
 }//end of Facility class
 
-class Library extends Facility implements Serializable{
+class Library extends Facility implements Reportable, Serializable{
+    private ArrayList<Book> books = new ArrayList<>(); // aggregation - books exist independently
 
-}
+    public Library(String entityID, String location, String name, double maintenanceCost, int operatingHours, int capacity, int memberCount) {
+        super(entityID, location, name, maintenanceCost, operatingHours, capacity);
+    }
+    
+    public ArrayList<Book> getBooks(){ 
+        return books;
+    }
+
+    public void addBook(Book b) {
+        if(b != null){
+            books.add(b);
+        } else {
+            System.out.println("Book cannot be null.");
+        }
+    }
+
+    public void removeBook(String bookID) {
+        for (int i = 0; i < books.size(); i++) {
+            if(books.get(i).getBookID().equals(bookID)) {
+                books.remove(i);
+                System.out.println("Book removed successfully.");
+                return;
+            }
+        }
+        System.out.println("Book not found.");
+    }
+
+    @Override
+    public double CalculateOperationalCost() {
+        return maintenanceCost + (operatingHours * 10) + (capacity * 5);
+    }
+
+    @Override
+    public void generateReport() {
+        System.out.println("=== Library Usage Report ===" +"\nName: " + getName() +"\nLocation: " + getLocation() +"\nTotal Books: " + books.size() +"\nOperational Cost: " + CalculateOperationalCost());
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nTotal Books:" + books.size();
+    }
+
+}//end of Library class
 
 class Cafeteria extends Facility implements Serializable{
     protected int seatCount, menuCount;
