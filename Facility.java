@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public abstract class Facility extends Campus_Entity{
+public abstract class Facility extends Campus_Entity implements Serializable{
     protected double maintenanceCost;
     protected int operatingHours, capacity;
     private static int totalFacilityUsage = 0;

@@ -98,7 +98,7 @@ class Department extends Academic_Unit implements Reportable,Serializable{
     public void removeTeacher(String teacherID) {
         boolean found = false;
         for (int i = 0; i < teachersList.size(); i++) {
-            if (teachersList.get(i) != null && teachersList.get(i).getTeacherId().equals(teacherID)) {
+            if (teachersList.get(i) != null && teachersList.get(i).getUserID().equals(teacherID)) {
                 teachersList.remove(i);
                 System.out.println("Successfully removed the teacher.");
                 found = true;

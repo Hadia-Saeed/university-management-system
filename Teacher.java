@@ -1,35 +1,18 @@
 import java.util.ArrayList;
 import java.io.Serializable;
 
-public class Teacher implements Serializable{
-    private String teacherId, name, department;
+public class Teacher extends User implements Serializable{
+    private String department;
     private ArrayList<String> assignedCourseIDs;
 
-    public Teacher(String teacherId, String name, String department) {
-        setTeacherId(teacherId);
-        setName(name);
+    public Teacher(String department,String userID, String userName, String password) {
+        super(userID, userName, password, "Teacher");
         setDepartment(department);
         assignedCourseIDs = new ArrayList<String>();
     }
 
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getDepartment() {
@@ -55,7 +38,7 @@ public class Teacher implements Serializable{
 
     @Override
     public String toString() {
-        return "TeacherID: " + teacherId + "\nName: " + name + "\nDepartment: " + department;
+        return super.toString() + "\nDepartment: " + department + "\nAssigned Courses: " + assignedCourseIDs;
     }
     
 }//end of Teacher class

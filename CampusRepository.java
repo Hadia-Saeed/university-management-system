@@ -1,7 +1,7 @@
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CampusRepository<T>  {
+public class CampusRepository<T> implements Serializable {
     private ArrayList<T> list = new ArrayList<>();
     private static int totalRepositories = 0;
 
