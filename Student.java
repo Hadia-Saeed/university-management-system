@@ -1,7 +1,6 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Student extends User implements Serializable{
+public class Student extends User{
     private static int totalStudents = 0; // Static variable to keep track of total students
     private int age;
     private double cgpa;

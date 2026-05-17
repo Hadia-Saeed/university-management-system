@@ -1,7 +1,6 @@
 import java.util.ArrayList;
-import java.io.Serializable;
 
-public class Teacher extends User implements Serializable{
+public class Teacher extends User{
     private String department;
     private ArrayList<String> assignedCourseIDs;
 
