@@ -22,8 +22,13 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String role) { //check for valid role
+        if(role.equalsIgnoreCase("Admin") || role.equalsIgnoreCase("Student") || role.equalsIgnoreCase("Teacher")){
+            this.role = role;
+        }
+        else{
+            System.out.println("Invalid role. Role must be either Admin, Student or Teacher.");
+        }
     }
 
     public String getUserID() {
