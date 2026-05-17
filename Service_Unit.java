@@ -149,18 +149,20 @@ class SecurityService extends Service_Unit implements Notifiable, Serializable{
 
     @Override
     public void sendNotification(String message) {
-        System.out.println("Sending security notification: " + message);
+        System.out.println("Security Notification: " + message);
     }
 
 }//end of SecurityService class
 
 class HealthCenter extends Service_Unit implements Notifiable, Serializable{
     protected int docCount, bedCount;
+    private SecurityService securityService;
 
-    public HealthCenter(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int docCount, int bedCount) {
+    public HealthCenter(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int docCount, int bedCount, SecurityService securityService) {
         super(entityID, location, name, serviceHours, staffCount, isActive);
         setDocCount(docCount);
         setBedCount(bedCount);
+        this.securityService = securityService;
     }
 
     public void setDocCount(int docCount) {
@@ -197,7 +199,14 @@ class HealthCenter extends Service_Unit implements Notifiable, Serializable{
 
     @Override
     public void sendNotification(String message) {
-        System.out.println("Sending health center notification: " + message);
+        System.out.println("health Center Notification: " + message);
+    }
+
+    //COMPLEXITY ADDITION : MEDICAL EMRGNCY : NOTIFY HEALTH AND SECURITY CENTER
+    public void reportEmergency(String location) {
+        System.out.println("=== MEDICAL EMERGENCY REPORTED ===");
+        sendNotification("Medical emergency at: " + location); // notifies HealthCenter
+        securityService.sendNotification("ALERT: Medical emergency at: " + location); // notifies SecurityService
     }
 
 }//end of HealthCenter class

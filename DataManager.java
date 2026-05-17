@@ -30,9 +30,18 @@ public class DataManager{
     public static void saveFacilities(CampusRepository<Facility> repo){
         save(repo,"facilities.dat");
     }
-    //to save all Users 
-    public static void saveUsers(CampusRepository<User> repo){
-        save(repo,"users.dat");
+    //to save all Users (diff implementation as it uses an arraylist of users to write in the file)
+    public static void saveUsers(ArrayList<User> repo){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.dat"));
+            oos.writeObject(repo);
+            oos.close();
+            System.out.println("users.dat saved successfully.");
+        }catch (IOException e) {
+            System.out.println("Error saving users.dat: " + e.getMessage());
+        } catch (Exception e){
+            System.out.println("Error saving users.dat: " + e.getMessage());
+        }
     }
 
     //PRIVATE GENERIC HELPER LOAD METHOD (Uses the file name passed)
@@ -72,7 +81,7 @@ public class DataManager{
     }
 
     //LOAD USERS HAS ITS OWN IMPLEMENTATION AS IT RETURNS AN ARRAY LIST AS CAMPUS REPO IS ONLY FOR STUDENTS,COURSES, AND FACILITIES
-    public static ArrayList loadUsers(){
+    public static ArrayList<User> loadUsers(){
         try {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.dat"));
         ArrayList<User> users = (ArrayList<User>) ois.readObject();
@@ -94,7 +103,7 @@ public class DataManager{
     }
 
     //SAVE ALL AT ONCE (ALSO USED AS BACKUP IN THE END OF THE PROGRAM)
-    public static void saveAll(CampusRepository<Student> students,CampusRepository<Course> courses,CampusRepository<Facility> facilities,CampusRepository<User> users) {
+    public static void saveAll(CampusRepository<Student> students,CampusRepository<Course> courses,CampusRepository<Facility> facilities,ArrayList<User> users) {
         saveStudents(students);
         saveCourses(courses);
         saveFacilities(facilities);
