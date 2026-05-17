@@ -1,5 +1,5 @@
 public interface Schedulable {
     
-    void generateSchedule();
+    String generateSchedule();
 
 }//end of Schedulable interface

@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class Service_Unit extends Campus_Entity{
     protected int serviceHours,staffCount;
@@ -47,61 +48,80 @@ public abstract class Service_Unit extends Campus_Entity{
 }//end of Service_Unit class
 
 class TransportService extends Service_Unit implements Schedulable, Serializable{
-    protected int routeCount, driverCount, busCount;
+    private ArrayList<String> routes;
+    private int peakHoursStart, peakHoursEnd,currentHour; 
 
-    public TransportService(String entityID, String location, String name, int serviceHours, int staffCount, boolean isActive, int routeCount, int driverCount, int busCount) {
-        super(entityID, location, name, serviceHours, staffCount, isActive);
-        setRouteCount(routeCount);
-        setDriverCount(driverCount);
-        setBusCount(busCount);
+    public TransportService(String entityID, String name, String location, int serviceHours, int staffCount, boolean isActive, int peakHoursStart, int peakHoursEnd) {
+        super(entityID, name, location, serviceHours, staffCount, isActive);
+        setPeakHoursStart(peakHoursStart);
+        setPeakHoursEnd(peakHoursEnd);
+        this.currentHour = 12; // default to noon (normal hours)
+        this.routes = new ArrayList<String>();
     }
 
-    public void setRouteCount(int routeCount) {
-        if(routeCount < 0){
-            System.err.println("Route count cannot be negative.");
+    public void setCurrentHour(int hour) {
+        if(hour < 0 || hour > 23){
+            System.err.println("Invalid hour. Hour must be between 0 and 23.");
+            return;
         }
-        this.routeCount = routeCount;
+        this.currentHour = hour;
     }
 
-    public void setDriverCount(int driverCount) {
-        if(driverCount < 0){
-            System.err.println("Driver count cannot be negative.");
+    public void setPeakHoursStart(int peakHoursStart) { 
+        this.peakHoursStart = peakHoursStart; 
+    }
+
+    public void setPeakHoursEnd(int peakHoursEnd){ 
+        this.peakHoursEnd = peakHoursEnd; 
+    }
+
+    public ArrayList<String> getRoutes(){ 
+        return routes; 
+    }
+
+    public int getPeakHoursStart(){ 
+        return peakHoursStart; 
+    }
+
+    public int getPeakHoursEnd(){ 
+        return peakHoursEnd; 
+    }
+
+    public int getCurrentHour(){ 
+        return currentHour;
+    }
+
+    public void addRoute(String route) {
+        routes.add(route);
+    }
+
+    public void removeRoute(String route) {
+        if(routes.contains(route)){
+            routes.remove(route);
+        } else {
+            System.out.println("Route not found: " + route);
         }
-        this.driverCount = driverCount;
     }
 
-    public void setBusCount(int busCount) {
-        if(busCount < 0){
-            System.err.println("Bus count cannot be negative.");
+    // From Schedulable interface
+    @Override
+    public String generateSchedule() {
+        String type = (currentHour >= peakHoursStart && currentHour <= peakHoursEnd) ? "PEAK HOURS — every 10 mins" : "Normal — every 30 mins";
+        String schedule = "Transport Schedule (" + type + "):\n";
+        for(int i = 0; i < routes.size(); i++) {
+            schedule += "  " + routes.get(i) + "\n";
         }
-        this.busCount = busCount;
+        return schedule;
     }
 
-    public int getRouteCount() {
-        return routeCount;
-    }
-
-    public int getDriverCount() {
-        return driverCount;
-    }
-
-    public int getBusCount() {
-        return busCount;
-    }
-    
     @Override
     public double CalculateOperationalCost() {
-        return (serviceHours * staffCount * 15) + (routeCount * 100) + (driverCount * 50) + (busCount * 200);
+        return routes.size() * getServiceHours() * 15.0;
     }
 
     @Override
     public String toString() {
-        return super.toString() + ("\nRouteCount:" + routeCount + "\nDriverCount:" + driverCount + "\nBusCount:" + busCount);
-    }
-
-    @Override
-    public void generateSchedule() {
-        System.out.println("Generating transport service schedule...");
+        return super.toString() + ", Routes: " + routes.size() + ", PeakHours: " + peakHoursStart + ":00 - " + peakHoursEnd + ":00" + ", CurrentHour: " + currentHour + ":00";
     }
     
 }//end of TransportService class
