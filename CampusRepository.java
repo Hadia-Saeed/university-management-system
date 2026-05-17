@@ -19,17 +19,11 @@ public class CampusRepository<T> implements Serializable {
     }
 
     public void removeitem(int index){
-        if(index>list.size()){
+        if(index<0 || index >= list.size()){
             System.out.println("Invalid Index Entered.");
             return;
         }
-        for (int i = 0; i < list.size(); i++) {
-            if(i==index){
-                list.remove(index);
-                return;
-            }
-            System.out.println("Invalid index entered.");
-        }
+        list.remove(index);
     }
 
     public ArrayList<T> getList(){
