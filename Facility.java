@@ -63,7 +63,7 @@ public abstract class Facility extends Campus_Entity implements Serializable{
 class Library extends Facility implements Reportable, Serializable{
     private ArrayList<Book> books = new ArrayList<>(); // aggregation - books exist independently
 
-    public Library(String entityID, String location, String name, double maintenanceCost, int operatingHours, int capacity, int memberCount) {
+    public Library(String entityID, String location, String name, double maintenanceCost, int operatingHours, int capacity) {
         super(entityID, location, name, maintenanceCost, operatingHours, capacity);
     }
     
