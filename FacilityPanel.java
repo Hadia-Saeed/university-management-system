@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class FacilityPanel extends JPanel {
 
@@ -17,7 +17,7 @@ public class FacilityPanel extends JPanel {
     private String[] columns = {"ID", "Name", "Location", "Type", "Maint. Cost", "Hours", "Capacity"};
 
     // Buttons
-    private JButton addButton, deleteButton, updateButton;
+    private JButton addButton, deleteButton, updateButton, selectButton;
 
     public FacilityPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -119,19 +119,25 @@ public class FacilityPanel extends JPanel {
             }
         });
 
-        // CLICK ON TABLE ROW → fill fields
-        facilityTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                int row = facilityTable.getSelectedRow();
-                idField.setText((String) facilityTable.getValueAt(row, 0));
-                nameField.setText((String) facilityTable.getValueAt(row, 1));
-                locationField.setText((String) facilityTable.getValueAt(row, 2));
-                typeCombo.setSelectedItem((String) facilityTable.getValueAt(row, 3));
-                costField.setText((String) facilityTable.getValueAt(row, 4));
-                hoursField.setText((String) facilityTable.getValueAt(row, 5));
-                capacityField.setText((String) facilityTable.getValueAt(row, 6));
-            }
-        });
+        selectButton = new JButton("Select Facility");
+        buttonPanel.add(selectButton);
+
+        selectButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        int row = facilityTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a row first.");
+            return;
+        }
+        idField.setText((String) facilityTable.getValueAt(row, 0));
+        nameField.setText((String) facilityTable.getValueAt(row, 1));
+        locationField.setText((String) facilityTable.getValueAt(row, 2));
+        typeCombo.setSelectedItem((String) facilityTable.getValueAt(row, 3));
+        costField.setText((String) facilityTable.getValueAt(row, 4));
+        hoursField.setText((String) facilityTable.getValueAt(row, 5));
+        capacityField.setText((String) facilityTable.getValueAt(row, 6));
+    }
+    });
     }
 
     // convert repo to 2D array for JTable

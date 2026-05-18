@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class CoursePanel extends JPanel {
 
@@ -14,7 +14,7 @@ public class CoursePanel extends JPanel {
     private String[] columns = {"Course ID", "Name", "Credit Hours", "Day", "Time", "Classroom"};
 
     // Buttons
-    private JButton addButton, deleteButton, updateButton;
+    private JButton addButton, deleteButton, updateButton, selectButton;
 
     public CoursePanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -106,18 +106,25 @@ public class CoursePanel extends JPanel {
             }
         });
 
-        // CLICK ROW → fill fields
-        courseTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                int row = courseTable.getSelectedRow();
-                idField.setText((String) courseTable.getValueAt(row, 0));
-                nameField.setText((String) courseTable.getValueAt(row, 1));
-                creditHoursField.setText((String) courseTable.getValueAt(row, 2));
-                dayField.setText((String) courseTable.getValueAt(row, 3));
-                timeField.setText((String) courseTable.getValueAt(row, 4));
-                classroomField.setText((String) courseTable.getValueAt(row, 5));
+        // fill fields using select button
+        selectButton = new JButton("Select Course");
+        buttonPanel.add(selectButton);
+
+        selectButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            int row = courseTable.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a row first.");
+                return;
             }
-        });
+        idField.setText((String) courseTable.getValueAt(row, 0));
+        nameField.setText((String) courseTable.getValueAt(row, 1));
+        creditHoursField.setText((String) courseTable.getValueAt(row, 2));
+        dayField.setText((String) courseTable.getValueAt(row, 3));
+        timeField.setText((String) courseTable.getValueAt(row, 4));
+        classroomField.setText((String) courseTable.getValueAt(row, 5));
+    }
+});
     }
 
     private String[][] getData() {

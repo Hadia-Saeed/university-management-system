@@ -28,21 +28,13 @@ public class MainFrame extends JFrame {
         // FRAME SETUP
         setTitle("Smart Campus Management System");
         setSize(900, 650);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setLocationRelativeTo(null);    //centers the window
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         // SHOW LOGIN FIRST
         loginPanel = new LoginPanel(this);
         add(loginPanel, BorderLayout.CENTER);
-
-        // SAVE ON CLOSE
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                DataManager.saveAll(studentRepo, courseRepo, facilityRepo, userList);
-                System.out.println("Data saved. Goodbye!");
-                System.exit(0);
-            }
-        });
 
         // AUTO SAVE EVERY 5 MINUTES
         javax.swing.Timer autoSave = new javax.swing.Timer(300000, new ActionListener() {
@@ -85,6 +77,7 @@ public class MainFrame extends JFrame {
         logoutButton.setForeground(Color.WHITE);
         logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                DataManager.saveAll(studentRepo, courseRepo, facilityRepo, userList);  //automatically save all data if user logouts
                 SessionManager.logout();
                 getContentPane().removeAll();
                 loginPanel = new LoginPanel(MainFrame.this);
@@ -95,10 +88,23 @@ public class MainFrame extends JFrame {
         });
         topPanel.add(logoutButton);
 
+        // SAVE AND EXIT BUTTON
+        JButton exitButton = new JButton("Save & Exit");
+        exitButton.setBackground(new Color(150, 50, 50));
+        exitButton.setForeground(Color.WHITE);
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DataManager.saveAll(studentRepo, courseRepo, facilityRepo, userList);
+                JOptionPane.showMessageDialog(null, "Data saved. Goodbye!");
+                System.exit(0);
+            }
+        });
+        topPanel.add(exitButton);
+
         add(topPanel, BorderLayout.NORTH);
 
-        revalidate();
-        repaint();
+        revalidate();  //tells Java to recalculate the layout after you add/remove panels dynamically.
+        repaint(); //tells Java to redraw the screen so the changes actually show up visually.
     }
 
     public static void main(String[] args) {

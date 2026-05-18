@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class StudentPanel extends JPanel {
 
@@ -14,7 +14,7 @@ public class StudentPanel extends JPanel {
     private String[] columns = {"Student ID", "Name", "Age", "CGPA"};
 
     // Buttons
-    private JButton addButton, deleteButton, updateButton;
+    private JButton addButton, deleteButton, updateButton, selectButton;
 
     public StudentPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -104,16 +104,23 @@ public class StudentPanel extends JPanel {
             }
         });
 
-        // CLICK ON TABLE ROW → fill fields
-        studentTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                int row = studentTable.getSelectedRow();
-                idField.setText((String) studentTable.getValueAt(row, 0));
-                nameField.setText((String) studentTable.getValueAt(row, 1));
-                ageField.setText((String) studentTable.getValueAt(row, 2));
-                cgpaField.setText((String) studentTable.getValueAt(row, 3));
-            }
-        });
+        // fill fields using select button
+        selectButton = new JButton("Select Student");
+        buttonPanel.add(selectButton);
+
+        selectButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        int row = studentTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a row first.");
+            return;
+        }
+        idField.setText((String) studentTable.getValueAt(row, 0));
+        nameField.setText((String) studentTable.getValueAt(row, 1));
+        ageField.setText((String) studentTable.getValueAt(row, 2));
+        cgpaField.setText((String) studentTable.getValueAt(row, 3));
+        }
+    });
     }
 
     // convert repo to 2D array for JTable

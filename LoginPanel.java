@@ -1,6 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class LoginPanel extends JPanel {
     private JTextField usernameField;
@@ -11,7 +11,7 @@ public class LoginPanel extends JPanel {
 
     public LoginPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        setBackground(new Color(30, 30, 30));
+        setBackground(Color.cyan);
         setLayout(new BorderLayout());
 
         // TITLE at top
@@ -22,8 +22,8 @@ public class LoginPanel extends JPanel {
 
         // FORM in center using GridLayout
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(2, 2, 10, 15)); // 2 rows, 2 cols, gaps
-        formPanel.setBackground(Color.DARK_GRAY);
+        formPanel.setLayout(new GridLayout(2, 2, 10,50)); // 2 rows, 2 cols, gaps
+        formPanel.setBackground(new Color(45, 45, 45));
 
         // Username Label and Field
         JLabel usernameLabel = new JLabel("Username:");
@@ -42,7 +42,7 @@ public class LoginPanel extends JPanel {
         // Center the form panel in the middle of the login panel
         JPanel middlePanel = new JPanel();
         middlePanel.setLayout(new FlowLayout(FlowLayout.CENTER,180,180));
-        middlePanel.setBackground(Color.LIGHT_GRAY);
+        middlePanel.setBackground(Color.black);
         formPanel.setPreferredSize(new Dimension(300, 120)); // adjust width/height as needed
         middlePanel.add(formPanel);
         add(middlePanel, BorderLayout.CENTER);
@@ -50,7 +50,7 @@ public class LoginPanel extends JPanel {
         // BUTTON and MESSAGE at bottom
         JPanel bottomPanel = new JPanel();                //bottom panel
         bottomPanel.setLayout(new FlowLayout());
-        bottomPanel.setBackground(Color.BLUE);
+        bottomPanel.setBackground(Color.lightGray);
 
         loginButton = new JButton("Login");            //Login button
         loginButton.setBackground(new Color(0, 120, 215));
