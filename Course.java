@@ -114,9 +114,9 @@ public class Course implements Schedulable,Serializable{
         return "Course [courseID=" + courseID + ", coursName=" + courseName + ", creditHours=" + creditHours + ", studentList=" + studentList + ", assignmentList=" + assignmentList + "]";
     }
 
-    public void generateSchedule(){
-        System.out.println("=== Class Schedule ===" +"\nCourse: " + courseName +"\nCourse ID: " + courseID +"\nDay(s): " + day +"\nTime: " + time +"\nAssigned Classroom: " + classroomID +"\nCredit Hours: " + creditHours);
-        
+    @Override
+    public String generateSchedule(){
+        return "=== Class Schedule ===" +"\nCourse: " + courseName +"\nCourse ID: " + courseID +"\nDay(s): " + day +"\nTime: " + time +"\nAssigned Classroom: " + classroomID +"\nCredit Hours: " + creditHours;
     }
 
 

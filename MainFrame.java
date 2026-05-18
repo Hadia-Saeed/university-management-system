@@ -66,7 +66,7 @@ public class MainFrame extends JFrame {
         tabbedPane.addTab("Student Management", new StudentPanel(this));
         tabbedPane.addTab("Course Management", new CoursePanel(this));
         tabbedPane.addTab("Facility Management", new FacilityPanel(this));
-        tabbedPane.addTab("Timetable & Reports", new TimetablePanel(this));
+        tabbedPane.addTab("Timetable & Reports", new TimeTablePanel(this));
         tabbedPane.addTab("Campus Map", new CampusMapPanel(this));
 
         add(tabbedPane, BorderLayout.CENTER);
