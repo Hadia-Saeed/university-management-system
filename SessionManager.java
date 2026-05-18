@@ -12,7 +12,7 @@ public class SessionManager {  //Login + Authentication
 
     public static boolean login(String username, String password) { //checks if the username and password match any of the registered users
         for (int i = 0; i < registeredUsers.size(); i++) {
-            if (registeredUsers.get(i).getUserName().equals(username) && registeredUsers.get(i).getPassword().equals(password)) {
+            if (registeredUsers.get(i).getUserName().equalsIgnoreCase(username) && registeredUsers.get(i).getPassword().equalsIgnoreCase(password)) {
                 currentUser = registeredUsers.get(i);
                 return true;    //Login successful
             }

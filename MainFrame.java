@@ -54,12 +54,23 @@ public class MainFrame extends JFrame {
 
         tabbedPane = new JTabbedPane();
 
-        // ADD TABS
+        // Role Based Access 
+       String role = SessionManager.getRole();
+       if (role.equalsIgnoreCase("Admin")) {
         tabbedPane.addTab("Student Management", new StudentPanel(this));
         tabbedPane.addTab("Course Management", new CoursePanel(this));
         tabbedPane.addTab("Facility Management", new FacilityPanel(this));
         tabbedPane.addTab("Timetable & Reports", new TimeTablePanel(this));
         tabbedPane.addTab("Campus Map", new CampusMapPanel(this));
+    } else if (role.equalsIgnoreCase("Teacher")) {
+        tabbedPane.addTab("Course Management", new CoursePanel(this));
+        tabbedPane.addTab("Student Management", new StudentPanel(this));
+        tabbedPane.addTab("Timetable & Reports", new TimeTablePanel(this));
+        tabbedPane.addTab("Campus Map", new CampusMapPanel(this));
+    } else { // Student
+        tabbedPane.addTab("Timetable & Reports", new TimeTablePanel(this));
+        tabbedPane.addTab("Campus Map", new CampusMapPanel(this));
+    }
 
         add(tabbedPane, BorderLayout.CENTER);
 

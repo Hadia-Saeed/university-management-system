@@ -96,6 +96,8 @@ public class DataManager{
             System.out.println("users.dat not found or empty. Creating default admin.");
             ArrayList<User> users = new ArrayList<User>();
             users.add(new Admin("A001", "admin", "admin123"));  // default login
+            users.add(new Student(20, 3.5, "S001", "student", "student123")); // default student login
+            users.add(new Teacher("Mathematics", "T001", "teacher", "teacher123")); // default teacher login
             return users;
         }
         catch (Exception e){
