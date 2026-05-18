@@ -83,7 +83,7 @@ public class LoginPanel extends JPanel {
             return;
         }
 
-        if (SessionManager.login(userID, username, password)) {
+        if (SessionManager.login(username, password)) {
             messageLabel.setForeground(Color.GREEN);
             messageLabel.setText("Welcome, " + SessionManager.getCurrentUser().getUserName());
             mainFrame.showDashboard();
