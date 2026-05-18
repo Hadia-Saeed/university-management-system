@@ -93,8 +93,10 @@ public class DataManager{
             return new ArrayList<User>();
         }
         catch (IOException e){
-            System.out.println("users.dat not found or empty. Starting fresh.");
-            return new ArrayList<User>();
+            System.out.println("users.dat not found or empty. Creating default admin.");
+            ArrayList<User> users = new ArrayList<User>();
+            users.add(new Admin("A001", "admin", "admin123"));  // default login
+            return users;
         }
         catch (Exception e){
             System.out.println( " An error occured while reading the file users.dat. Starting fresh.");

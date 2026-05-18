@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class SessionManager {
+public class SessionManager {  //Login + Authentication  
     private static User currentUser;
     private static ArrayList<User> registeredUsers = new ArrayList<>();
 
@@ -10,9 +10,9 @@ public class SessionManager {
         registeredUsers = users;
     }
 
-    public static boolean login(String userID, String username, String password) { //checks if the userID, username and password match any of the registered users
+    public static boolean login(String username, String password) { //checks if the username and password match any of the registered users
         for (int i = 0; i < registeredUsers.size(); i++) {
-            if (registeredUsers.get(i).getUserID().equals(userID) && registeredUsers.get(i).getUserName().equals(username) && registeredUsers.get(i).getPassword().equals(password)) {
+            if (registeredUsers.get(i).getUserName().equals(username) && registeredUsers.get(i).getPassword().equals(password)) {
                 currentUser = registeredUsers.get(i);
                 return true;    //Login successful
             }
